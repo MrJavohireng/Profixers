@@ -1,0 +1,32 @@
+{% extends "./basic.html" %}
+{% load static %}
+{% block static %}<link rel="stylesheet" href="{% static "/css/index.css" %}">{% endblock static %}
+    {% block section %}
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Ustani Topish Endi Oson!</h1>
+        <p>ProFixers orqali elektrchi, santexnik, IT mutaxassis yoki boshqa xizmat egalarini toping.</p>
+    </section>
+
+    <!-- Fixer List -->
+    <section class="fixer-list" id="fixer-list">
+        <h2>Mashhur Ustalar</h2>
+        
+        <div class="row">
+            {% for i in data %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ i.user.full_name }}</h5>
+                        <p class="card-text">{{ i.name }}</p>
+                        <p>Reyting: {{ i.rating }}</p>
+                        <a href="{% url "service_detail" i.pk %}" class="btn btn-primary">Buyurtma berish</a>
+                    </div>
+                </div>
+            </div>
+           {% endfor %}
+        </div>
+    </section>
+    {% endblock section %}

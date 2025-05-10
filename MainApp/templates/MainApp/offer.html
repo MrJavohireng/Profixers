@@ -1,0 +1,24 @@
+{% extends "./basic.html" %}
+{% load static %}
+{% block static %}<link rel="stylesheet" href="{% static "/css/offer.css" %}">{% endblock static %}
+    {% block section %}
+
+
+    <div class="main">
+        <div class="service-container">
+            <h2>Xizmat Taqdim Etish</h2>
+            <div class="service-description">
+                <p>Ushbu sahifada o'z xizmatlaringizni taqdim etishingiz mumkin. Foydalanuvchilar sizning xizmatlaringizni ko'rib, buyurtma berishlari mumkin.</p>
+            </div>
+
+            <div class="offer-service-form">
+                <input type="text" name="service_name" placeholder="Xizmat nomi" required>
+                <textarea name="service_description" rows="4" placeholder="Xizmat haqida batafsil ma'lumot" required></textarea>
+                <input type="number" name="price" placeholder="Xizmat narxi" required>
+                <button type="submit">Xizmatni taqdim etish</button>
+            </div>
+        </div>
+    </div>
+    {% endblock section %}
+    <!-- Main Content -->
+

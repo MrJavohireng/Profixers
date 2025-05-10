@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProFixers - Kirish</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #343a40;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1.1em;
+        }
+        .navbar .btn {
+            color: white;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .navbar .btn-primary, .navbar .btn-info {
+            background-color: #007bff; /* Same color for both buttons */
+        }
+        .navbar .btn:hover {
+            opacity: 0.8;
+        }
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 120px);
+        }
+        .login-container {
+            max-width: 300px;
+            width: 100%;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-container h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            width: 100%;
+        }
+        .login-container form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .login-container button,
+        .login-container a.register-link {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .login-container button:hover,
+        .login-container a.register-link:hover {
+            opacity: 0.9;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#">ProFixers</a>
+        <div>
+            <a href="#loginModal" class="btn btn-primary" data-bs-toggle="modal">Kirish</a>
+            <a href="#loginModal" class="btn btn-primary" data-bs-toggle="modal">Chiqish</a>
+            <a href="#loginModal" class="btn btn-primary" data-bs-toggle="modal">Profile</a>
+            <a href="#loginModl" class="btn btn-primary" data-bs-toggle="modal">Xizmatlar</a>
+
+        </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="main">
+        <div class="login-container">
+            <h2>Kirish</h2>
+            <form action="/login" method="post">
+                <input type="text" name="username" placeholder="Login" required>
+                <input type="password" name="password" placeholder="Parol" required>
+                <button type="submit">Kirish</button>
+                <a href="register.html" class="register-link">Ro'yxatdan o'tish</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="mb-0">© 2025 ProFixers. Barcha huquqlar himoyalangan.</p>
+    </footer>
+
+</body>
+</html>

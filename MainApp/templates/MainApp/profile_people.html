@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProFixers - Profilni tahrirlash</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .navbar {
+            background-color: #343a40;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1.1em;
+        }
+        .navbar .btn {
+            color: white;
+            padding: 8px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .navbar .btn-primary, .navbar .btn-info {
+            background-color: #007bff; /* Same color for both buttons */
+        }
+        .navbar .btn:hover {
+            opacity: 0.8;
+        }
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex: 1;
+            margin-top: 80px; /* navbar balandligi */
+            padding-bottom: 70px; /* footer balandligi */
+            overflow-y: auto;
+        }
+        .profile-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-container h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            width: 100%;
+        }
+        .profile-container form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-container input {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .profile-container button {
+            display: inline-block;
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            text-align: center;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .profile-container button:hover {
+            opacity: 0.9;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="#">ProFixers</a>
+        <div>
+            <a href="#loginModal" class="btn btn-primary" data-bs-toggle="modal">Kirish</a>
+            <a href="#loginModal" class="btn btn-primary" data-bs-toggle="modal">Chiqish</a>
+            <a href="#loginModal" class="btn btn-primary" data-bs-toggle="modal">Profile</a>
+            <a href="#loginModl" class="btn btn-primary" data-bs-toggle="modal">Xizmatlar</a>
+
+        </div>
+    </div>
+
+    <!-- Profile Edit Form -->
+    <div class="main">
+        <div class="profile-container">
+            <h2>Profilni tahrirlash</h2>
+            
+            <form action="/update-profile" method="post">
+                <input type="text" name="name" placeholder="F.I.SH" value="Foydalanuvchi Ismi" required>
+                <input type="email" name="email" placeholder="Email" value="user@example.com" required>
+                <input type="text" name="phone" placeholder="Telefon raqam" value="+998 90 123 45 67" required>
+                <input type="password" name="new_password" placeholder="Yangi parol" required>
+                <input type="password" name="confirm_password" placeholder="Parolni tasdiqlash" required>
+                <button type="submit">Yangilash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="mb-0">© 2025 ProFixers. Barcha huquqlar himoyalangan.</p>
+    </footer>
+
+</body>
+</html>

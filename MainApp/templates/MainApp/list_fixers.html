@@ -1,0 +1,35 @@
+{% extends "./basic.html" %}
+{% load static %}
+{% block static %}<link rel="stylesheet" href="{% static "/css/list_fixers.css" %}">{% endblock static %}
+    {% block section %}
+
+
+
+
+    <!-- Main Content -->
+    <div class="main">
+        <h2 style="text-align: center;">Ustalar Ro'yxati</h2>
+        
+        <div class="experts-container">
+            <!-- Example Expert Card -->
+            <div class="expert-card">
+                <h3>Usta Ismi</h3>
+                <p>Ixtisoslashuvi: Elektrik</p>
+                <p>Tajribasi: 5 yil</p>
+            </div>
+            
+            <div class="expert-card">
+                <h3>Usta Ismi</h3>
+                <p>Ixtisoslashuvi: Santexnik</p>
+                <p>Tajribasi: 3 yil</p>
+            </div>
+
+            <div class="expert-card">
+                <h3>Usta Ismi</h3>
+                <p>Ixtisoslashuvi: Dizayner</p>
+                <p>Tajribasi: 4 yil</p>
+            </div>
+            <!-- Add more expert cards here -->
+        </div>
+    </div>
+    {% endblock section %}
