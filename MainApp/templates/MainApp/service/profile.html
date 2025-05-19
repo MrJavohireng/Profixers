@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Личный кабинет</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#4f46e5", secondary: "#6366f1" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      }
+      input:focus, textarea:focus {
+      outline: none;
+      border-color: #4f46e5;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      }
+      .custom-checkbox {
+      position: relative;
+      cursor: pointer;
+      }
+      .custom-checkbox input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      }
+      .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background-color: #fff;
+      border: 2px solid #d1d5db;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      }
+      .custom-checkbox:hover input ~ .checkmark {
+      border-color: #4f46e5;
+      }
+      .custom-checkbox input:checked ~ .checkmark {
+      background-color: #4f46e5;
+      border-color: #4f46e5;
+      }
+      .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      }
+      .custom-checkbox input:checked ~ .checkmark:after {
+      display: block;
+      }
+      .custom-checkbox .checkmark:after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+      <header class="flex items-center justify-between mb-10">
+        <div class="text-2xl font-['Pacifico'] text-primary">logo</div>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden"
+            >
+              <img
+                src="https://readdy.ai/api/search-image?query=professional%20portrait%20photo%20of%20a%20young%20man%20with%20short%20hair%2C%20neutral%20expression%2C%20looking%20at%20camera%2C%20high%20quality%2C%20realistic%2C%20professional%20lighting&width=200&height=200&seq=1&orientation=squarish"
+                alt="Аватар пользователя"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <span class="text-gray-700 font-medium">Александр Петров</span>
+          </div>
+          <button
+            class="flex items-center gap-1 text-gray-600 hover:text-primary transition-colors !rounded-button"
+          >
+            <div class="w-5 h-5 flex items-center justify-center">
+              <i class="ri-logout-box-line"></i>
+            </div>
+            <span class="whitespace-nowrap">Выйти</span>
+          </button>
+        </div>
+      </header>
+      <div class="flex gap-8">
+        <!-- Левая панель навигации -->
+        <div class="w-64 shrink-0">
+          <div class="bg-white rounded-lg shadow-sm p-4">
+            <button
+              id="profile-tab"
+              class="w-full text-left py-3 px-4 mb-2 rounded-button bg-primary text-white font-medium flex items-center gap-3 whitespace-nowrap"
+            >
+              <div class="w-5 h-5 flex items-center justify-center">
+                <i class="ri-user-line"></i>
+              </div>
+              Профиль
+            </button>
+            <button
+              id="services-tab"
+              class="w-full text-left py-3 px-4 rounded-button text-gray-700 hover:bg-gray-50 font-medium flex items-center gap-3 whitespace-nowrap"
+            >
+              <div class="w-5 h-5 flex items-center justify-center">
+                <i class="ri-service-line"></i>
+              </div>
+              Мои услуги
+            </button>
+          </div>
+        </div>
+        <!-- Правая панель содержимого -->
+        <div class="flex-1">
+          <!-- Секция профиля -->
+          <div id="profile-content" class="bg-white rounded-lg shadow-sm p-8">
+            <h1 class="text-2xl font-semibold text-gray-800 mb-8">
+              Личный профиль
+            </h1>
+            <div class="flex flex-col items-center mb-10">
+              <div class="relative mb-4">
+                <div
+                  class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md"
+                >
+                  <img
+                    src="https://readdy.ai/api/search-image?query=professional%20portrait%20photo%20of%20a%20young%20man%20with%20short%20hair%2C%20neutral%20expression%2C%20looking%20at%20camera%2C%20high%20quality%2C%20realistic%2C%20professional%20lighting&width=300&height=300&seq=2&orientation=squarish"
+                    alt="Фото профиля"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <button
+                  class="absolute bottom-0 right-0 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md !rounded-button"
+                >
+                  <div class="w-5 h-5 flex items-center justify-center">
+                    <i class="ri-camera-line"></i>
+                  </div>
+                </button>
+              </div>
+              <h2 class="text-xl font-medium text-gray-800">
+                Александр Петров
+              </h2>
+              <p class="text-gray-500">Зарегистрирован: 15 мая 2023</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 class="text-lg font-medium text-gray-800 mb-4">
+                  Личная информация
+                </h3>
+                <div class="space-y-4">
+                  <div>
+                    <label
+                      for="name"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Имя</label
+                    >
+                    <input
+                      type="text"
+                      id="name"
+                      value="Александр Петров"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="phone"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Номер телефона</label
+                    >
+                    <input
+                      type="tel"
+                      id="phone"
+                      value="+7 (903) 123-45-67"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="email"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Электронная почта</label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      value="alex.petrov@example.com"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                    />
+                  </div>
+                  <button
+                    class="bg-primary text-white px-6 py-2 rounded-button font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
+                  >
+                    Сохранить изменения
+                  </button>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-lg font-medium text-gray-800 mb-4">
+                  Изменение пароля
+                </h3>
+                <div class="space-y-4">
+                  <div>
+                    <label
+                      for="current-password"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Текущий пароль</label
+                    >
+                    <div class="relative">
+                      <input
+                        type="password"
+                        id="current-password"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                      />
+                      <button
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      >
+                        <div class="w-5 h-5 flex items-center justify-center">
+                          <i class="ri-eye-line"></i>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="new-password"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Новый пароль</label
+                    >
+                    <div class="relative">
+                      <input
+                        type="password"
+                        id="new-password"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                      />
+                      <button
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      >
+                        <div class="w-5 h-5 flex items-center justify-center">
+                          <i class="ri-eye-line"></i>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="confirm-password"
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                      >Подтвердите новый пароль</label
+                    >
+                    <div class="relative">
+                      <input
+                        type="password"
+                        id="confirm-password"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                      />
+                      <button
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      >
+                        <div class="w-5 h-5 flex items-center justify-center">
+                          <i class="ri-eye-line"></i>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    class="bg-primary text-white px-6 py-2 rounded-button font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
+                  >
+                    Сменить пароль
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Секция услуг (скрыта по умолчанию) -->
+          <div
+            id="services-content"
+            class="bg-white rounded-lg shadow-sm p-8 hidden"
+          >
+            <div class="flex justify-between items-center mb-8">
+              <h1 class="text-2xl font-semibold text-gray-800">Мои услуги</h1>
+              <button
+                id="add-service-btn"
+                class="bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-primary/90 transition-colors flex items-center gap-2 whitespace-nowrap"
+              >
+                <div class="w-5 h-5 flex items-center justify-center">
+                  <i class="ri-add-line"></i>
+                </div>
+                Добавить услугу
+              </button>
+              <div
+                id="service-modal"
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+              >
+                <div class="bg-white rounded-lg w-full max-w-2xl p-6 mx-4">
+                  <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                      Добавление услуги
+                    </h2>
+                    <button
+                      id="close-modal"
+                      class="text-gray-500 hover:text-gray-700"
+                    >
+                      <div class="w-6 h-6 flex items-center justify-center">
+                        <i class="ri-close-line"></i>
+                      </div>
+                    </button>
+                  </div>
+                  <form id="service-form" class="space-y-6">
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                        >Название услуги</label
+                      >
+                      <input
+                        type="text"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-1"
+                        >Описание услуги</label
+                      >
+                      <textarea
+                        class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary h-24 resize-none"
+                        required
+                      ></textarea>
+                    </div>
+                    <div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        >Стоимость за час</label
+                      >
+                      <div class="mb-4">
+                        <input
+                          type="number"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-button text-gray-700 focus:border-primary"
+                          placeholder="₽"
+                          id="hourly-rate"
+                        />
+                      </div>
+                      <label
+                        class="block text-sm font-medium text-gray-700 mb-2"
+                        >Выберите рабочие дни</label
+                      >
+                      <div class="grid grid-cols-2 gap-3">
+                        <label class="custom-checkbox flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="monday"
+                            class="day-checkbox"
+                          />
+                          <span class="checkmark"></span>
+                          <span class="ml-6">Понедельник</span>
+                        </label>
+                        <label class="custom-checkbox flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="tuesday"
+                            class="day-checkbox"
+                          />
+                          <span class="checkmark"></span>
+                          <span class="ml-6">Вторник</span>
+                        </label>
+                        <label class="custom-checkbox flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="wednesday"
+                            class="day-checkbox"
+                          />
+                          <span class="checkmark"></span>
+                          <span class="ml-6">Среда</span>
+                        </label>
+                        <label class="custom-checkbox flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="thursday"
+                            class="day-checkbox"
+                          />
+                          <span class="checkmark"></span>
+                          <span class="ml-6">Четверг</span>
+                        </label>
+                        <label class="custom-checkbox flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="friday"
+                            class="day-checkbox"
+                          />
+                          <span class="checkmark"></span>
+                          <span class="ml-6">Пятница</span>
+                        </label>
+                        <label class="custom-checkbox flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="saturday"
+                            class="day-checkbox"
+                          />
+                          <span class="checkmark"></span>
+                          <span class="ml-6">Суббота</span>
+                        </label>
+                        <label class="custom-checkbox flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            name="sunday"
+                            class="day-checkbox"
+                          />
+                          <span class="checkmark"></span>
+                          <span class="ml-6">Воскресенье</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="flex justify-end gap-3">
+                      <button
+                        type="button"
+                        id="cancel-service"
+                        class="px-6 py-2 border border-gray-300 rounded-button text-gray-700 hover:bg-gray-50 transition-colors whitespace-nowrap"
+                      >
+                        Отмена
+                      </button>
+                      <button
+                        type="submit"
+                        class="bg-primary text-white px-6 py-2 rounded-button font-medium hover:bg-primary/90 transition-colors whitespace-nowrap"
+                        id="submit-button"
+                      >
+                        Сохранить
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Карточка услуги 1 -->
+              
+              <div
+                class="border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div class="flex justify-between items-start mb-4">
+                  <h3 class="text-lg font-medium text-gray-800">
+                    Разработка веб-сайта
+                  </h3>
+                  <div class="flex gap-2">
+                    <button
+                      class="text-gray-500 hover:text-primary transition-colors"
+                    >
+                      <div class="w-5 h-5 flex items-center justify-center">
+                        <i class="ri-edit-line"></i>
+                      </div>
+                    </button>
+                    <button
+                      class="text-gray-500 hover:text-red-500 transition-colors"
+                    >
+                      <div class="w-5 h-5 flex items-center justify-center">
+                        <i class="ri-delete-bin-line"></i>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 text-gray-600 mb-4">
+                  <div class="w-5 h-5 flex items-center justify-center">
+                    <i class="ri-calendar-line"></i>
+                  </div>
+                  <span>Вт, Чт, Сб</span>
+                </div>
+                <p class="text-gray-600 mb-4">
+                  Создание современных адаптивных веб-сайтов с уникальным
+                  дизайном и удобным интерфейсом.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-xl font-semibold text-primary"
+                    >от 50 000 ₽</span
+                  >
+                  <span class="text-sm text-gray-500">Создано: 25.03.2025</span>
+                </div>
+              </div>
+              <!-- Карточка услуги 3 -->
+              
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const profileTab = document.getElementById("profile-tab");
+        const addServiceBtn = document.getElementById("add-service-btn");
+        const serviceModal = document.getElementById("service-modal");
+        const closeModal = document.getElementById("close-modal");
+        const cancelService = document.getElementById("cancel-service");
+        const serviceForm = document.getElementById("service-form");
+        const dayCheckboxes = document.querySelectorAll(".day-checkbox");
+        const dayPrices = document.querySelectorAll(".day-price");
+        let currentEditingService = null;
+        document.addEventListener("DOMContentLoaded", function () {
+          const editServiceHandler = function (e) {
+            e.stopPropagation();
+            const serviceCard = this.closest(".border.border-gray-200");
+            currentEditingService = serviceCard;
+            const title = serviceCard.querySelector("h3").textContent;
+            const description = serviceCard.querySelector("p").textContent;
+            const price = serviceCard
+              .querySelector(".text-primary")
+              .textContent.match(/\d+/)[0];
+            const days =
+              serviceCard.querySelector(".ri-calendar-line").nextElementSibling
+                .textContent;
+            document.querySelector("#service-modal h2").textContent =
+              "Редактирование услуги";
+
+            const titleInput = document.querySelector(
+              '#service-form input[type="text"]',
+            );
+            const descriptionInput = document.querySelector("#service-form textarea");
+            const hourlyRateInput = document.getElementById("hourly-rate");
+            const submitButton = document.getElementById("submit-button");
+            titleInput.value = title;
+            descriptionInput.value = description;
+            hourlyRateInput.value = price;
+            submitButton.textContent = "Изменить";
+            const daysArray = days.split("-");
+            const dayMap = {
+              Пн: "monday",
+              Вт: "tuesday",
+              Ср: "wednesday",
+              Чт: "thursday",
+              Пт: "friday",
+              Сб: "saturday",
+              Вс: "sunday",
+            };
+            document.querySelectorAll(".day-checkbox").forEach((checkbox) => {
+              checkbox.checked = daysArray.some((day) =>
+                day
+                  .trim()
+                  .startsWith(checkbox.name.slice(0, 2).charAt(0).toUpperCase()),
+              );
+            });
+            toggleModal(true);
+          };
+          document
+            .querySelectorAll(".text-gray-500.hover\\:text-primary")
+            .forEach((button) => {
+              button.removeEventListener("click", editServiceHandler);
+              button.addEventListener("click", editServiceHandler);
+            });
+        });
+        function toggleModal(show) {
+          if (show) {
+            serviceModal.classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+          } else {
+            serviceModal.classList.add("hidden");
+            document.body.style.overflow = "";
+            serviceForm.reset();
+            dayPrices.forEach((price) => (price.disabled = true));
+          }
+        }
+        addServiceBtn.addEventListener("click", () => {
+          document.querySelector("#service-modal h2").textContent =
+            "Добавление услуги";
+          document.getElementById("submit-button").textContent = "Сохранить";
+          toggleModal(true);
+        });
+        closeModal.addEventListener("click", () => toggleModal(false));
+        cancelService.addEventListener("click", () => toggleModal(false));
+        serviceModal.addEventListener("click", (e) => {
+          if (e.target === serviceModal) {
+            toggleModal(false);
+          }
+        });
+        const hourlyRate = document.getElementById("hourly-rate");
+        dayCheckboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", function () {
+            if (this.checked && !hourlyRate.value) {
+              this.checked = false;
+              const message = document.createElement("div");
+              message.className =
+                "fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50";
+              message.textContent = "Пожалуйста, сначала укажите стоимость за час";
+              document.body.appendChild(message);
+              setTimeout(() => message.remove(), 3000);
+            }
+          });
+        });
+        document
+          .getElementById("service-form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (currentEditingService) {
+              const titleInput = this.querySelector('input[type="text"]');
+              const descriptionInput = this.querySelector("textarea");
+              const hourlyRate = document.getElementById("hourly-rate").value;
+              const selectedDays = [];
+              document.querySelectorAll(".day-checkbox").forEach((checkbox) => {
+                if (checkbox.checked) {
+                  selectedDays.push(
+                    checkbox.name.slice(0, 2).charAt(0).toUpperCase() +
+                      checkbox.name.slice(0, 2).charAt(1).toLowerCase(),
+                  );
+                }
+              });
+              const daysText =
+                selectedDays.length > 0
+                  ? selectedDays.join("-")
+                  : "По договоренности";
+              currentEditingService.querySelector("h3").textContent =
+                titleInput.value;
+              currentEditingService.querySelector("p").textContent =
+                descriptionInput.value;
+              currentEditingService.querySelector(
+                ".ri-calendar-line",
+              ).nextElementSibling.textContent = daysText;
+              currentEditingService.querySelector(".text-primary").textContent =
+                `${hourlyRate} ₽/час`;
+              const successMessage = document.createElement("div");
+              successMessage.className =
+                "fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg";
+              successMessage.textContent = "Услуга успешно обновлена";
+              document.body.appendChild(successMessage);
+              setTimeout(() => {
+                successMessage.remove();
+              }, 3000);
+              currentEditingService = null;
+            }
+            toggleModal(false);
+          });
+        const servicesTab = document.getElementById("services-tab");
+        const profileContent = document.getElementById("profile-content");
+        const servicesContent = document.getElementById("services-content");
+        profileTab.addEventListener("click", function () {
+          profileTab.classList.add("bg-primary", "text-white");
+          profileTab.classList.remove("text-gray-700", "hover:bg-gray-50");
+          servicesTab.classList.remove("bg-primary", "text-white");
+          servicesTab.classList.add("text-gray-700", "hover:bg-gray-50");
+          profileContent.classList.remove("hidden");
+          servicesContent.classList.add("hidden");
+        });
+        servicesTab.addEventListener("click", function () {
+          servicesTab.classList.add("bg-primary", "text-white");
+          servicesTab.classList.remove("text-gray-700", "hover:bg-gray-50");
+          profileTab.classList.remove("bg-primary", "text-white");
+          profileTab.classList.add("text-gray-700", "hover:bg-gray-50");
+          servicesContent.classList.remove("hidden");
+          profileContent.classList.add("hidden");
+        });
+        // Обработчики для кнопок отображения пароля
+        const passwordToggles = document.querySelectorAll(".relative button");
+        passwordToggles.forEach((toggle) => {
+          toggle.addEventListener("click", function () {
+            const input = this.parentElement.querySelector("input");
+            const icon = this.querySelector("i");
+            if (input.type === "password") {
+              input.type = "text";
+              icon.classList.remove("ri-eye-line");
+              icon.classList.add("ri-eye-off-line");
+            } else {
+              input.type = "password";
+              icon.classList.remove("ri-eye-off-line");
+              icon.classList.add("ri-eye-line");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

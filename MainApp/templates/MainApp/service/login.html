@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вход в систему</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#4F46E5",
+              secondary: "#6366F1",
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+          background-color: #f9fafb;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      .form-input {
+          width: 100%;
+          padding: 0.75rem 1rem 0.75rem 2.5rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          outline: none;
+          transition: all 0.3s;
+      }
+      .form-input:focus {
+          border-color: #4F46E5;
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      }
+      .input-icon {
+          position: absolute;
+          left: 0.75rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #9ca3af;
+      }
+      .password-toggle {
+          position: absolute;
+          right: 0.75rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #9ca3af;
+          cursor: pointer;
+      }
+      .modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 50;
+          align-items: center;
+          justify-content: center;
+      }
+      .modal.active {
+          display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="w-full max-w-md mx-auto p-6">
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="text-center mb-8">
+          <h1 class="font-['Pacifico'] text-3xl text-gray-800 mb-2">logo</h1>
+          <h2 class="text-2xl font-bold text-gray-800">Вход в систему</h2>
+          <p class="text-gray-600 mt-2">Введите свои данные для входа</p>
+        </div>
+
+        <form id="loginForm" class="space-y-6">
+          <div class="relative">
+            <div class="input-icon w-5 h-5 flex items-center justify-center">
+              <i class="ri-user-line text-lg"></i>
+            </div>
+            <input
+              type="text"
+              id="login"
+              class="form-input"
+              placeholder="Логин"
+              required
+            />
+          </div>
+
+          <div class="relative">
+            <div class="input-icon w-5 h-5 flex items-center justify-center">
+              <i class="ri-lock-line text-lg"></i>
+            </div>
+            <input
+              type="password"
+              id="password"
+              class="form-input"
+              placeholder="Пароль"
+              required
+            />
+            <div
+              class="password-toggle w-5 h-5 flex items-center justify-center"
+            >
+              <i class="ri-eye-line text-lg" id="togglePassword"></i>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input type="checkbox" id="remember" class="hidden" />
+              <label for="remember" class="flex items-center cursor-pointer">
+                <div
+                  class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center mr-2 bg-white"
+                >
+                  <div
+                    id="checkmark"
+                    class="w-3 h-3 bg-primary rounded-sm hidden"
+                  ></div>
+                </div>
+                <span class="text-sm text-gray-700">Запомнить меня</span>
+              </label>
+            </div>
+            <a
+              href="#"
+              class="text-sm text-primary hover:text-indigo-700 whitespace-nowrap"
+              >Забыли пароль?</a
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-primary text-white py-3 px-4 rounded-button font-medium hover:bg-indigo-700 transition duration-300 whitespace-nowrap"
+          >
+            Войти
+          </button>
+        </form>
+
+        <div class="mt-8 text-center">
+          <p class="text-gray-600">Еще не зарегистрированы?</p>
+          <button
+            id="openRegister"
+            class="mt-2 text-primary hover:text-indigo-700 font-medium whitespace-nowrap !rounded-button"
+          >
+            Регистрация
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div id="registerModal" class="modal">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-8 relative">
+        <button
+          id="closeModal"
+          class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 w-8 h-8 flex items-center justify-center"
+        >
+          <i class="ri-close-line text-xl"></i>
+        </button>
+
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">Регистрация</h2>
+          <p class="text-gray-600 mt-2">Создайте новую учетную запись</p>
+        </div>
+
+        <form id="registerForm" class="space-y-5">
+          <div class="relative">
+            <div class="input-icon w-5 h-5 flex items-center justify-center">
+              <i class="ri-user-line text-lg"></i>
+            </div>
+            <input
+              type="text"
+              id="name"
+              class="form-input"
+              placeholder="Имя"
+              required
+            />
+          </div>
+
+          <div class="relative">
+            <div class="input-icon w-5 h-5 flex items-center justify-center">
+              <i class="ri-user-3-line text-lg"></i>
+            </div>
+            <input
+              type="text"
+              id="registerLogin"
+              class="form-input"
+              placeholder="Логин"
+              required
+            />
+          </div>
+
+          <div class="relative">
+            <div class="input-icon w-5 h-5 flex items-center justify-center">
+              <i class="ri-lock-line text-lg"></i>
+            </div>
+            <input
+              type="password"
+              id="registerPassword"
+              class="form-input"
+              placeholder="Пароль"
+              required
+            />
+            <div
+              class="password-toggle w-5 h-5 flex items-center justify-center"
+            >
+              <i class="ri-eye-line text-lg" id="toggleRegisterPassword"></i>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="input-icon w-5 h-5 flex items-center justify-center">
+              <i class="ri-phone-line text-lg"></i>
+            </div>
+            <input
+              type="tel"
+              id="phone"
+              class="form-input"
+              placeholder="Номер телефона"
+              required
+            />
+          </div>
+
+          <div class="flex items-center">
+            <input type="checkbox" id="terms" class="hidden" />
+            <label for="terms" class="flex items-center cursor-pointer">
+              <div
+                class="w-5 h-5 border border-gray-300 rounded flex items-center justify-center mr-2 bg-white"
+              >
+                <div
+                  id="termsCheckmark"
+                  class="w-3 h-3 bg-primary rounded-sm hidden"
+                ></div>
+              </div>
+              <span class="text-sm text-gray-700"
+                >Я согласен с
+                <a href="#" class="text-primary hover:text-indigo-700"
+                  >условиями использования</a
+                ></span
+              >
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-primary text-white py-3 px-4 rounded-button font-medium hover:bg-indigo-700 transition duration-300 whitespace-nowrap"
+          >
+            Зарегистрироваться
+          </button>
+        </form>
+
+        <div class="mt-6 text-center">
+          <p class="text-gray-600">Уже есть аккаунт?</p>
+          <button
+            id="backToLogin"
+            class="mt-2 text-primary hover:text-indigo-700 font-medium whitespace-nowrap !rounded-button"
+          >
+            Войти
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Переключение видимости пароля
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordField = document.getElementById("password");
+
+        togglePassword.addEventListener("click", function () {
+          const type =
+            passwordField.getAttribute("type") === "password" ? "text" : "password";
+          passwordField.setAttribute("type", type);
+          this.classList.toggle("ri-eye-line");
+          this.classList.toggle("ri-eye-off-line");
+        });
+
+        // Переключение видимости пароля в форме регистрации
+        const toggleRegisterPassword = document.getElementById(
+          "toggleRegisterPassword",
+        );
+        const registerPasswordField = document.getElementById("registerPassword");
+
+        toggleRegisterPassword.addEventListener("click", function () {
+          const type =
+            registerPasswordField.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          registerPasswordField.setAttribute("type", type);
+          this.classList.toggle("ri-eye-line");
+          this.classList.toggle("ri-eye-off-line");
+        });
+
+        // Кастомный чекбокс "Запомнить меня"
+        const rememberCheckbox = document.getElementById("remember");
+        const checkmark = document.getElementById("checkmark");
+
+        rememberCheckbox.addEventListener("change", function () {
+          if (this.checked) {
+            checkmark.classList.remove("hidden");
+          } else {
+            checkmark.classList.add("hidden");
+          }
+        });
+
+        document
+          .querySelector('label[for="remember"]')
+          .addEventListener("click", function () {
+            rememberCheckbox.checked = !rememberCheckbox.checked;
+            if (rememberCheckbox.checked) {
+              checkmark.classList.remove("hidden");
+            } else {
+              checkmark.classList.add("hidden");
+            }
+          });
+
+        // Кастомный чекбокс "Условия использования"
+        const termsCheckbox = document.getElementById("terms");
+        const termsCheckmark = document.getElementById("termsCheckmark");
+
+        termsCheckbox.addEventListener("change", function () {
+          if (this.checked) {
+            termsCheckmark.classList.remove("hidden");
+          } else {
+            termsCheckmark.classList.add("hidden");
+          }
+        });
+
+        document
+          .querySelector('label[for="terms"]')
+          .addEventListener("click", function () {
+            termsCheckbox.checked = !termsCheckbox.checked;
+            if (termsCheckbox.checked) {
+              termsCheckmark.classList.remove("hidden");
+            } else {
+              termsCheckmark.classList.add("hidden");
+            }
+          });
+
+        // Открытие/закрытие модального окна регистрации
+        const registerModal = document.getElementById("registerModal");
+        const openRegisterBtn = document.getElementById("openRegister");
+        const closeModalBtn = document.getElementById("closeModal");
+        const backToLoginBtn = document.getElementById("backToLogin");
+
+        openRegisterBtn.addEventListener("click", function () {
+          registerModal.classList.add("active");
+        });
+
+        closeModalBtn.addEventListener("click", function () {
+          registerModal.classList.remove("active");
+        });
+
+        backToLoginBtn.addEventListener("click", function () {
+          registerModal.classList.remove("active");
+        });
+
+        // Закрытие модального окна при клике вне его
+        registerModal.addEventListener("click", function (e) {
+          if (e.target === registerModal) {
+            registerModal.classList.remove("active");
+          }
+        });
+
+        // Обработка отправки формы входа
+        document.getElementById("loginForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+          // Здесь будет логика отправки формы входа
+          alert("Форма входа отправлена");
+        });
+
+        // Обработка отправки формы регистрации
+        document
+          .getElementById("registerForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (!termsCheckbox.checked) {
+              alert(
+                "Для регистрации необходимо согласиться с условиями использования",
+              );
+              return;
+            }
+            // Здесь будет логика отправки формы регистрации
+            alert("Форма регистрации отправлена");
+            registerModal.classList.remove("active");
+          });
+      });
+    </script>
+  </body>
+</html>
