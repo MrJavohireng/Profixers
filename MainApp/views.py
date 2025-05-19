@@ -4,7 +4,7 @@ from django.views import View
 class MainPage(View):
     def get(self, request):
 
-        return render(request=request, template_name="MainApp/index.html", context=context)
+        return render(request=request, template_name="MainApp/index.html")
     
 class ServicesPage(View):
     def get(self, request):
